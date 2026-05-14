@@ -1,6 +1,5 @@
 import type { Metadata, Viewport } from 'next'
 import { JetBrains_Mono } from 'next/font/google'
-import localFont from 'next/font/local'
 import { ThemeProvider } from '@/components/theme-provider'
 
 import './globals.css'
@@ -8,18 +7,6 @@ import './globals.css'
 const jetbrainsMono = JetBrains_Mono({
   subsets: ['latin', 'cyrillic'],
   variable: '--font-mono',
-})
-
-const geistPixelGrid = localFont({
-  src: [
-    {
-      path: '../public/fonts/GeistPixelGrid-Regular.woff2',
-      weight: '400',
-      style: 'normal',
-    },
-  ],
-  variable: '--font-geist-pixel-grid',
-  display: 'swap',
 })
 
 export const metadata: Metadata = {
@@ -62,7 +49,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className={`${jetbrainsMono.variable} ${geistPixelGrid.variable} bg-background`} suppressHydrationWarning>
+    <html lang="en" className={`${jetbrainsMono.variable} bg-background`} suppressHydrationWarning>
       <body className="font-mono antialiased">
         <ThemeProvider
           attribute="class"
