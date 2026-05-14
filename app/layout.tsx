@@ -1,22 +1,31 @@
 import type { Metadata, Viewport } from 'next'
-import { Inter, Fira_Code } from 'next/font/google'
+import { JetBrains_Mono } from 'next/font/google'
+import localFont from 'next/font/local'
+import { ThemeProvider } from '@/components/theme-provider'
 
 import './globals.css'
 
-const inter = Inter({
+const jetbrainsMono = JetBrains_Mono({
   subsets: ['latin', 'cyrillic'],
-  variable: '--font-sans',
-})
-
-const firaCode = Fira_Code({
-  subsets: ['latin'],
   variable: '--font-mono',
 })
 
+const geistPixelGrid = localFont({
+  src: [
+    {
+      path: '../public/fonts/GeistPixelGrid-Regular.woff2',
+      weight: '400',
+      style: 'normal',
+    },
+  ],
+  variable: '--font-geist-pixel-grid',
+  display: 'swap',
+})
+
 export const metadata: Metadata = {
-  title: 'Tamirlan Kustanayev | AI & Backend Engineer',
+  title: 'TAMIRLAN.DEV | AI & Backend Engineer',
   description:
-    'AI & Backend Engineer specializing in LLM infrastructure, vLLM, FastAPI, and scalable microservices. Building intelligent systems at Bereke Bank.',
+    'AI & Backend Engineer. Building LLM infrastructure, vLLM deployments, and scalable microservices. Currently at Bereke Bank.',
   keywords: [
     'Tamirlan Kustanayev',
     'AI Engineer',
@@ -33,21 +42,15 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     locale: 'en_US',
-    title: 'Tamirlan Kustanayev | AI & Backend Engineer',
+    title: 'TAMIRLAN.DEV | AI & Backend Engineer',
     description:
-      'AI & Backend Engineer specializing in LLM infrastructure, vLLM, FastAPI, and scalable microservices.',
-    siteName: 'Tamirlan Kustanayev',
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'Tamirlan Kustanayev | AI & Backend Engineer',
-    description:
-      'AI & Backend Engineer specializing in LLM infrastructure, vLLM, FastAPI, and scalable microservices.',
+      'AI & Backend Engineer. Building LLM infrastructure, vLLM deployments, and scalable microservices.',
+    siteName: 'TAMIRLAN.DEV',
   },
 }
 
 export const viewport: Viewport = {
-  themeColor: '#1a2332',
+  themeColor: '#0d0d0d',
   width: 'device-width',
   initialScale: 1,
   maximumScale: 5,
@@ -59,9 +62,16 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className={`${inter.variable} ${firaCode.variable} bg-background`}>
-      <body className="font-sans antialiased">
-        {children}
+    <html lang="en" className={`${jetbrainsMono.variable} ${geistPixelGrid.variable} bg-background`} suppressHydrationWarning>
+      <body className="font-mono antialiased">
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="dark"
+          enableSystem
+          disableTransitionOnChange
+        >
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   )
