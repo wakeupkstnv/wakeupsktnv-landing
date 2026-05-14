@@ -3,24 +3,137 @@
 import { ArrowRight, Github, Linkedin, Mail, MapPin } from "lucide-react"
 import { motion } from "framer-motion"
 import { useEffect, useRef, useState } from "react"
+import { useTheme } from "next-themes"
 
 const ease = [0.22, 1, 0.36, 1] as const
 
-// Animated grid background
+// Animated Dither Background with moving metaballs
+function AnimatedDitherBackground() {
+  const canvasRef = useRef<HTMLCanvasElement>(null)
+  const { resolvedTheme } = useTheme()
+  const animationRef = useRef<number>()
+  const timeRef = useRef(0)
+
+  useEffect(() => {
+    const canvas = canvasRef.current
+    if (!canvas) return
+    const ctx = canvas.getContext("2d")
+    if (!ctx) return
+
+    const w = 320
+    const h = 240
+    canvas.width = w
+    canvas.height = h
+
+    const isDark = resolvedTheme === "dark"
+    const darkVal = isDark ? 230 : 10
+    const lightVal = isDark ? 15 : 230
+
+    // Metaball positions (will animate)
+    const metaballs = [
+      { x: w * 0.3, y: h * 0.3, r: 60, vx: 0.3, vy: 0.2 },
+      { x: w * 0.7, y: h * 0.3, r: 50, vx: -0.25, vy: 0.3 },
+      { x: w * 0.5, y: h * 0.7, r: 70, vx: 0.2, vy: -0.25 },
+      { x: w * 0.2, y: h * 0.6, r: 40, vx: 0.35, vy: -0.15 },
+      { x: w * 0.8, y: h * 0.7, r: 45, vx: -0.3, vy: 0.2 },
+    ]
+
+    const imageData = ctx.createImageData(w, h)
+    const data = imageData.data
+
+    // Bayer dither matrix 4x4
+    const bayerMatrix = [
+      [0, 8, 2, 10],
+      [12, 4, 14, 6],
+      [3, 11, 1, 9],
+      [15, 7, 13, 5],
+    ]
+
+    function animate() {
+      timeRef.current += 0.016
+
+      // Update metaball positions
+      for (const ball of metaballs) {
+        ball.x += ball.vx
+        ball.y += ball.vy
+
+        // Bounce off edges
+        if (ball.x < ball.r || ball.x > w - ball.r) ball.vx *= -1
+        if (ball.y < ball.r || ball.y > h - ball.r) ball.vy *= -1
+
+        // Keep in bounds
+        ball.x = Math.max(ball.r, Math.min(w - ball.r, ball.x))
+        ball.y = Math.max(ball.r, Math.min(h - ball.r, ball.y))
+      }
+
+      // Render dithered metaballs
+      for (let y = 0; y < h; y++) {
+        for (let x = 0; x < w; x++) {
+          const idx = (y * w + x) * 4
+
+          // Calculate metaball influence
+          let sum = 0
+          for (const ball of metaballs) {
+            const dx = x - ball.x
+            const dy = y - ball.y
+            const dist = Math.sqrt(dx * dx + dy * dy)
+            sum += (ball.r * ball.r) / (dist * dist + 1)
+          }
+
+          // Normalize and apply threshold
+          const value = Math.min(sum / 1.5, 1)
+
+          // Apply Bayer dithering
+          const bayerValue = bayerMatrix[y % 4][x % 4] / 16
+          const dithered = value > bayerValue ? darkVal : lightVal
+
+          data[idx] = dithered
+          data[idx + 1] = dithered
+          data[idx + 2] = dithered
+          data[idx + 3] = 255
+        }
+      }
+
+      ctx.putImageData(imageData, 0, 0)
+      animationRef.current = requestAnimationFrame(animate)
+    }
+
+    animate()
+
+    return () => {
+      if (animationRef.current) {
+        cancelAnimationFrame(animationRef.current)
+      }
+    }
+  }, [resolvedTheme])
+
+  return (
+    <div className="absolute inset-0 flex items-center justify-center pointer-events-none overflow-hidden">
+      <canvas
+        ref={canvasRef}
+        className="w-full h-full object-cover opacity-30"
+        style={{ imageRendering: "pixelated" }}
+        aria-hidden="true"
+      />
+    </div>
+  )
+}
+
+// Animated grid overlay
 function AnimatedGrid() {
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none">
       <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
         <defs>
           <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
-            <path d="M 40 0 L 0 0 0 40" fill="none" stroke="hsl(var(--foreground))" strokeWidth="0.5" strokeOpacity="0.1" />
+            <path d="M 40 0 L 0 0 0 40" fill="none" stroke="hsl(var(--foreground))" strokeWidth="0.5" strokeOpacity="0.05" />
           </pattern>
         </defs>
         <rect width="100%" height="100%" fill="url(#grid)" />
       </svg>
       {/* Animated scan line */}
       <motion.div
-        className="absolute left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#ea580c]/50 to-transparent"
+        className="absolute left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#ea580c]/30 to-transparent"
         initial={{ top: "0%" }}
         animate={{ top: "100%" }}
         transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
@@ -29,143 +142,14 @@ function AnimatedGrid() {
   )
 }
 
-// Floating particles
-function FloatingParticles() {
-  const [particles, setParticles] = useState<Array<{ id: number; x: number; y: number; size: number; delay: number }>>([])
-
-  useEffect(() => {
-    const newParticles = Array.from({ length: 20 }, (_, i) => ({
-      id: i,
-      x: Math.random() * 100,
-      y: Math.random() * 100,
-      size: Math.random() * 3 + 1,
-      delay: Math.random() * 5,
-    }))
-    setParticles(newParticles)
-  }, [])
-
-  return (
-    <div className="absolute inset-0 overflow-hidden pointer-events-none">
-      {particles.map((p) => (
-        <motion.div
-          key={p.id}
-          className="absolute bg-[#ea580c]"
-          style={{
-            left: `${p.x}%`,
-            top: `${p.y}%`,
-            width: p.size,
-            height: p.size,
-          }}
-          animate={{
-            y: [-20, 20, -20],
-            opacity: [0.2, 0.8, 0.2],
-          }}
-          transition={{
-            duration: 4 + Math.random() * 2,
-            delay: p.delay,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-        />
-      ))}
-    </div>
-  )
-}
-
-// Node graph background
-function NodeGraph() {
-  const nodes = [
-    { x: 10, y: 20 },
-    { x: 25, y: 60 },
-    { x: 40, y: 30 },
-    { x: 55, y: 70 },
-    { x: 70, y: 25 },
-    { x: 85, y: 55 },
-    { x: 15, y: 80 },
-    { x: 90, y: 85 },
-  ]
-
-  const connections = [
-    [0, 1], [0, 2], [1, 3], [2, 3], [2, 4], [4, 5], [3, 5], [1, 6], [5, 7], [3, 7]
-  ]
-
-  return (
-    <svg className="absolute inset-0 w-full h-full pointer-events-none" style={{ opacity: 0.15 }}>
-      {/* Connections */}
-      {connections.map(([from, to], i) => (
-        <motion.line
-          key={`line-${i}`}
-          x1={`${nodes[from].x}%`}
-          y1={`${nodes[from].y}%`}
-          x2={`${nodes[to].x}%`}
-          y2={`${nodes[to].y}%`}
-          stroke="hsl(var(--foreground))"
-          strokeWidth="1"
-          strokeDasharray="4 4"
-          initial={{ pathLength: 0 }}
-          animate={{ pathLength: 1 }}
-          transition={{ duration: 2, delay: i * 0.1 }}
-        />
-      ))}
-      {/* Nodes */}
-      {nodes.map((node, i) => (
-        <motion.g key={`node-${i}`}>
-          <motion.circle
-            cx={`${node.x}%`}
-            cy={`${node.y}%`}
-            r="4"
-            fill="hsl(var(--foreground))"
-            initial={{ scale: 0 }}
-            animate={{ scale: 1 }}
-            transition={{ duration: 0.5, delay: i * 0.1 }}
-          />
-          <motion.circle
-            cx={`${node.x}%`}
-            cy={`${node.y}%`}
-            r="8"
-            fill="none"
-            stroke="#ea580c"
-            strokeWidth="1"
-            initial={{ scale: 0, opacity: 0 }}
-            animate={{ scale: [1, 1.5, 1], opacity: [0.5, 0, 0.5] }}
-            transition={{ duration: 3, delay: i * 0.2, repeat: Infinity }}
-          />
-        </motion.g>
-      ))}
-      {/* Data packets */}
-      {connections.slice(0, 5).map(([from, to], i) => (
-        <motion.circle
-          key={`packet-${i}`}
-          r="3"
-          fill="#ea580c"
-          initial={{ 
-            cx: `${nodes[from].x}%`, 
-            cy: `${nodes[from].y}%` 
-          }}
-          animate={{ 
-            cx: [`${nodes[from].x}%`, `${nodes[to].x}%`],
-            cy: [`${nodes[from].y}%`, `${nodes[to].y}%`]
-          }}
-          transition={{
-            duration: 2,
-            delay: i * 0.5,
-            repeat: Infinity,
-            repeatDelay: 2,
-            ease: "linear"
-          }}
-        />
-      ))}
-    </svg>
-  )
-}
-
 export function PersonalHero() {
   return (
     <section className="relative w-full px-6 pt-6 pb-12 lg:px-12 lg:pt-10 lg:pb-16 min-h-[90vh] flex flex-col justify-center">
-      {/* Background effects */}
+      {/* Animated dither background */}
+      <AnimatedDitherBackground />
+      
+      {/* Grid overlay */}
       <AnimatedGrid />
-      <FloatingParticles />
-      <NodeGraph />
 
       <div className="relative z-10 flex flex-col items-center text-center">
         {/* Top headline */}
@@ -183,7 +167,7 @@ export function PersonalHero() {
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.6, delay: 0.15, ease }}
-          className="w-full max-w-2xl my-6 border-2 border-foreground bg-background/80 backdrop-blur-sm"
+          className="w-full max-w-2xl my-6 border-2 border-foreground bg-background/90 backdrop-blur-sm"
         >
           {/* Terminal header */}
           <div className="flex items-center justify-between px-4 py-2 border-b-2 border-foreground bg-foreground/5">
