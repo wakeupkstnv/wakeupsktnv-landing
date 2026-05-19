@@ -20,55 +20,55 @@ const EXPERIENCES: Experience[] = [
   {
     id: "bereke",
     company: "BEREKE BANK",
-    role: "AI & Backend Engineer",
-    period: "DEC 2024 — PRESENT",
+    role: "Middle Backend/AI Engineer",
+    period: "AUG 2025 — DEC 2025",
     location: "Almaty, Kazakhstan",
     description: [
-      "Building LLM infrastructure for banking applications using vLLM",
-      "Developing scalable microservices with FastAPI and PostgreSQL",
-      "Implementing AI-powered solutions for financial operations",
+      "Integrated vLLM with LiteLLM to provide a scalable and cost-efficient LLM serving layer with API-key-based access control",
+      "Implemented observability and eval pipelines in LangFuse for LLM performance monitoring, trace analysis, and quality evaluation",
+      "Optimized LLM inference throughput by configuring GPU utilization and batching strategies in vLLM",
     ],
-    technologies: ["Python", "FastAPI", "vLLM", "PostgreSQL", "Docker", "K8s"],
-    current: true,
+    technologies: ["Python", "vLLM", "LiteLLM", "LangFuse", "LLMs", "GPU"],
   },
   {
     id: "koz",
     company: "KOZ DIGITAL AI",
-    role: "AI Engineer",
-    period: "NOV 2024 — DEC 2024",
-    location: "Remote",
+    role: "Backend/AI Engineer",
+    period: "FEB 2025 — AUG 2025",
+    location: "Almaty, Kazakhstan",
     description: [
-      "Developed AI solutions for digital transformation projects",
-      "Implemented machine learning pipelines and models",
-      "Collaborated on computer vision and NLP applications",
+      "Developed AI-based voice call services for automated customer interaction",
+      "Built AI agent orchestration using Pydantic AI to dynamically manage behavior",
+      "Implemented clean architecture across microservices to improve scalability and maintainability",
+      "Configured CI/CD pipelines, Docker, and Digital Ocean deployments",
     ],
-    technologies: ["Python", "TensorFlow", "FastAPI", "Docker"],
+    technologies: ["Python", "FastAPI", "Pydantic AI", "Docker", "CI/CD", "Digital Ocean"],
   },
   {
     id: "nfactorial",
     company: "NFACTORIAL INCUBATOR",
-    role: "Backend Developer",
+    role: "Mentor (Backend)",
     period: "JUN 2024 — AUG 2024",
     location: "Almaty, Kazakhstan",
     description: [
-      "Selected as one of top 50 finalists from 6,500+ applicants",
-      "Built backend systems for startup projects using FastAPI",
-      "Worked in agile team environment on real-world applications",
+      "Mentored students in backend development using FastAPI and Docker",
+      "Guided projects from idea to deployment with cloud and CI/CD support",
     ],
-    technologies: ["Python", "FastAPI", "PostgreSQL", "Redis"],
+    technologies: ["FastAPI", "Docker", "Mentoring", "Cloud", "CI/CD"],
   },
   {
     id: "kettik",
     company: "KETTIK GROUP",
-    role: "Backend Developer",
-    period: "MAY 2024 — JUN 2024",
+    role: "Software Engineer Intern",
+    period: "AUG 2024 — FEB 2025",
     location: "Almaty, Kazakhstan",
     description: [
-      "Developed REST APIs for mobile and web applications",
-      "Implemented database schemas and optimized queries",
-      "Participated in code reviews and technical discussions",
+      "Set up and optimized a high-load project capable of handling 100k concurrent users",
+      "Parsed data of 2000 venues from Almaty and Astana",
+      "Developed a backend service integrated into platforms like Sxodim and Seruen.ai",
+      "Built an interactive map with advanced filtering capabilities",
     ],
-    technologies: ["Python", "Django", "PostgreSQL"],
+    technologies: ["Python", "PostgreSQL", "High-load", "Data Parsing"],
   },
 ]
 
@@ -79,7 +79,7 @@ function ExperienceCard({ experience, index }: { experience: Experience; index: 
       whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
       viewport={{ once: true, margin: "-40px" }}
       transition={{ delay: index * 0.1, duration: 0.6, ease }}
-      className={`border-2 border-foreground ${experience.current ? "bg-foreground text-background" : "bg-background"}`}
+      className={`pixel-panel border-2 border-foreground ${experience.current ? "bg-foreground text-background" : "bg-background/90"}`}
     >
       {/* Card header */}
       <div className={`flex items-center justify-between px-5 py-3 border-b-2 ${experience.current ? "border-background/20" : "border-foreground"}`}>
@@ -87,11 +87,6 @@ function ExperienceCard({ experience, index }: { experience: Experience; index: 
           {experience.company}
         </span>
         <div className="flex items-center gap-2">
-          {experience.current && (
-            <span className="bg-[#ea580c] text-background text-[9px] tracking-[0.15em] uppercase px-2 py-0.5 font-mono">
-              CURRENT
-            </span>
-          )}
           <span className={`text-[10px] tracking-[0.2em] font-mono ${experience.current ? "text-background/50" : "text-muted-foreground"}`}>
             {String(index + 1).padStart(2, "0")}
           </span>
@@ -114,7 +109,7 @@ function ExperienceCard({ experience, index }: { experience: Experience; index: 
         <ul className={`flex flex-col gap-2 mb-4 text-xs font-mono leading-relaxed ${experience.current ? "text-background/80" : "text-muted-foreground"}`}>
           {experience.description.map((item, i) => (
             <li key={i} className="flex items-start gap-2">
-              <span className="text-[#ea580c] mt-0.5">{">"}</span>
+              <span className="text-[#8fb8c7] mt-0.5">{">"}</span>
               <span>{item}</span>
             </li>
           ))}
@@ -128,7 +123,7 @@ function ExperienceCard({ experience, index }: { experience: Experience; index: 
               className={`text-[9px] tracking-[0.15em] uppercase px-2 py-1 font-mono ${
                 experience.current 
                   ? "border border-background/30 text-background/80" 
-                  : "border border-foreground/30 text-foreground/80"
+                  : "pixel-chip border border-foreground/30 text-foreground/80"
               }`}
             >
               {tech}
@@ -155,7 +150,7 @@ export function ExperienceSection() {
           {"// SECTION: WORK_EXPERIENCE"}
         </span>
         <div className="flex-1 border-t border-border" />
-        <Briefcase size={12} className="text-[#ea580c]" />
+        <Briefcase size={12} className="text-[#8fb8c7]" />
         <span className="text-[10px] tracking-[0.2em] uppercase text-muted-foreground font-mono">002</span>
       </motion.div>
 

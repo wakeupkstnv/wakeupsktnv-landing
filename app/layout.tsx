@@ -1,25 +1,19 @@
 import type { Metadata, Viewport } from 'next'
-import { JetBrains_Mono } from 'next/font/google'
 import { ThemeProvider } from '@/components/theme-provider'
 
 import './globals.css'
 
-const jetbrainsMono = JetBrains_Mono({
-  subsets: ['latin', 'cyrillic'],
-  variable: '--font-mono',
-})
-
 export const metadata: Metadata = {
-  title: 'TAMIRLAN.DEV | AI & Backend Engineer',
+  title: 'TAMIRLAN.EXE | AI & Backend Engineer',
   description:
-    'AI & Backend Engineer. Building LLM infrastructure, vLLM deployments, and scalable microservices. Currently at Bereke Bank.',
+    'AI & Backend Engineer building backend systems, agent orchestration, and practical production APIs.',
   keywords: [
     'Tamirlan Kustanayev',
     'AI Engineer',
     'Backend Engineer',
     'Python Developer',
     'FastAPI',
-    'vLLM',
+    'Pydantic AI',
     'LLM Infrastructure',
     'Machine Learning',
     'Kazakhstan',
@@ -29,10 +23,10 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     locale: 'en_US',
-    title: 'TAMIRLAN.DEV | AI & Backend Engineer',
+    title: 'TAMIRLAN.EXE | AI & Backend Engineer',
     description:
-      'AI & Backend Engineer. Building LLM infrastructure, vLLM deployments, and scalable microservices.',
-    siteName: 'TAMIRLAN.DEV',
+      'AI & Backend Engineer building backend systems, agent orchestration, and practical production APIs.',
+    siteName: 'TAMIRLAN.EXE',
   },
 }
 
@@ -49,12 +43,13 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className={`${jetbrainsMono.variable} bg-background`} suppressHydrationWarning>
+    <html lang="en" className="bg-background" suppressHydrationWarning>
       <body className="font-mono antialiased">
         <ThemeProvider
           attribute="class"
           defaultTheme="dark"
-          enableSystem
+          enableSystem={false}
+          storageKey="tamirlan-theme-mode"
           disableTransitionOnChange
         >
           {children}

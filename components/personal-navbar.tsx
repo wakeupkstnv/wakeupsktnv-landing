@@ -12,7 +12,7 @@ export function PersonalNavbar() {
       transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
       className="w-full px-4 pt-4 lg:px-6 lg:pt-6"
     >
-      <nav className="w-full border-2 border-foreground bg-background/80 backdrop-blur-sm px-6 py-3 lg:px-8">
+      <nav className="pixel-panel w-full border-2 border-foreground bg-background/85 backdrop-blur-sm px-6 py-3 lg:px-8">
         <div className="flex items-center justify-between">
           {/* Logo */}
           <motion.a
@@ -24,7 +24,7 @@ export function PersonalNavbar() {
           >
             <Terminal size={16} strokeWidth={1.5} />
             <span className="text-xs font-mono tracking-[0.15em] uppercase font-bold">
-              TAMIRLAN.DEV
+              TAMIRLAN.EXE
             </span>
           </motion.a>
 
@@ -58,12 +58,12 @@ export function PersonalNavbar() {
           >
             <ThemeToggle />
             <motion.a
-              href="mailto:kustanayevtamirlan1@gmail.com"
+              href="mailto:tkustanayev@kbtu.kz"
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
-              className="bg-foreground text-background px-4 py-2 text-xs font-mono tracking-widest uppercase hover:bg-[#ea580c] transition-colors duration-200"
+              className="pixel-button bg-foreground text-background px-4 py-2 text-xs font-mono tracking-widest uppercase hover:bg-[#8fb8c7] transition-colors duration-200"
             >
-              Hire Me
+              Contact
             </motion.a>
           </motion.div>
         </div>

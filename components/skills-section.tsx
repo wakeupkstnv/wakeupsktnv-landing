@@ -13,27 +13,27 @@ interface SkillCategory {
 const SKILL_CATEGORIES: SkillCategory[] = [
   {
     name: "LANGUAGES",
-    skills: ["Python", "JavaScript", "TypeScript", "SQL", "Go"],
+    skills: ["Python", "Java", "SQL", "MySQL", "PostgreSQL", "SQLite"],
   },
   {
     name: "FRAMEWORKS",
-    skills: ["FastAPI", "Django", "Flask", "Next.js", "React"],
+    skills: ["FastAPI", "Django REST Framework", "Sanic", "Litestar"],
   },
   {
-    name: "AI / ML",
-    skills: ["vLLM", "LangChain", "HuggingFace", "TensorFlow", "PyTorch", "OpenAI API"],
+    name: "AI / BACKEND",
+    skills: ["Pydantic AI", "LLMs", "vLLM", "LiteLLM", "LangFuse", "WebSockets", "Asyncio", "Pydantic"],
   },
   {
     name: "DATABASES",
-    skills: ["PostgreSQL", "MongoDB", "Redis", "ChromaDB", "Pinecone"],
+    skills: ["MongoDB", "Redis", "PostgreSQL", "MySQL", "SQLite"],
+  },
+  {
+    name: "DEVELOPER TOOLS",
+    skills: ["Git", "Docker", "RabbitMQ", "Celery", "SQLAlchemy", "Alembic", "PyTest"],
   },
   {
     name: "DEVOPS / MLOPS",
-    skills: ["Docker", "Kubernetes", "Git", "CI/CD", "AWS", "GCP"],
-  },
-  {
-    name: "TOOLS",
-    skills: ["Linux", "Nginx", "Celery", "RabbitMQ", "Prometheus"],
+    skills: ["AWS", "Vagrant", "Nomad", "GitLab CI", "ArgoCD", "Argo Workflows", "Grafana"],
   },
 ]
 
@@ -44,7 +44,7 @@ function SkillBlock({ category, index }: { category: SkillCategory; index: numbe
       whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
       viewport={{ once: true, margin: "-30px" }}
       transition={{ delay: index * 0.08, duration: 0.5, ease }}
-      className="border-2 border-foreground"
+      className="pixel-panel border-2 border-foreground bg-background/90"
     >
       {/* Category header */}
       <div className="flex items-center justify-between px-4 py-2 border-b-2 border-foreground bg-foreground/5">
@@ -65,7 +65,7 @@ function SkillBlock({ category, index }: { category: SkillCategory; index: numbe
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
             transition={{ delay: index * 0.08 + i * 0.03, duration: 0.3, ease }}
-            className="text-xs tracking-[0.1em] uppercase px-3 py-1.5 font-mono bg-foreground text-background hover:bg-[#ea580c] transition-colors duration-200 cursor-default"
+            className="pixel-chip text-xs tracking-[0.1em] uppercase px-3 py-1.5 font-mono bg-foreground text-background hover:bg-[#8fb8c7] transition-colors duration-200 cursor-default"
           >
             {skill}
           </motion.span>
@@ -90,7 +90,7 @@ export function SkillsSection() {
           {"// SECTION: TECH_STACK"}
         </span>
         <div className="flex-1 border-t border-border" />
-        <Code2 size={12} className="text-[#ea580c]" />
+        <Code2 size={12} className="text-[#8fb8c7]" />
         <span className="text-[10px] tracking-[0.2em] uppercase text-muted-foreground font-mono">003</span>
       </motion.div>
 

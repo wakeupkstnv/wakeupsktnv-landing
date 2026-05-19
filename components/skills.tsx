@@ -1,19 +1,23 @@
 const skillCategories = [
   {
     title: "Languages",
-    skills: ["Python", "Java", "SQL", "PostgreSQL", "MySQL", "MongoDB", "Redis"],
+    skills: ["Python", "Java", "SQL", "MySQL", "PostgreSQL", "SQLite"],
   },
   {
     title: "Frameworks",
     skills: ["FastAPI", "Django Rest Framework", "Sanic", "Litestar"],
   },
   {
-    title: "AI/ML",
-    skills: ["vLLM", "LiteLLM", "LangFuse", "Pydantic AI", "LLMs"],
+    title: "AI / Backend",
+    skills: ["Pydantic AI", "LLMs", "vLLM", "LiteLLM", "LangFuse", "WebSockets", "Asyncio", "Pydantic"],
+  },
+  {
+    title: "Databases",
+    skills: ["MongoDB", "Redis", "PostgreSQL", "MySQL", "SQLite"],
   },
   {
     title: "Developer Tools",
-    skills: ["Git", "Docker", "RabbitMQ", "Celery", "SQLAlchemy", "Alembic", "Asyncio", "WebSockets", "PyTest"],
+    skills: ["Git", "Docker", "RabbitMQ", "Celery", "SQLAlchemy", "Alembic", "PyTest"],
   },
   {
     title: "DevOps/MLOps",

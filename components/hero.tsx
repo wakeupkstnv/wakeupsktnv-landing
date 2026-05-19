@@ -17,14 +17,14 @@ export function Hero() {
         </div>
 
         <p className="text-lg sm:text-xl text-muted-foreground max-w-2xl leading-relaxed">
-          I build scalable AI infrastructure and backend systems. Currently working on{" "}
-          <span className="text-primary font-medium">LLM serving layers</span> and{" "}
-          <span className="text-primary font-medium">observability pipelines</span> at Bereke Bank.
+          I build scalable AI infrastructure and backend systems around{" "}
+          <span className="text-primary font-medium">LLM serving layers</span>,{" "}
+          <span className="text-primary font-medium">observability pipelines</span>, and production APIs.
         </p>
 
         <p className="text-muted-foreground leading-relaxed max-w-2xl">
-          Previously, I developed AI-based voice call services and agent orchestration systems at KOZ Digital AI. 
-          I specialize in Python, FastAPI, vLLM, and building high-load applications that scale.
+          Previously, I worked on LLM serving and observability pipelines at Bereke Bank, and developed
+          AI-based voice call services and agent orchestration systems at KOZ Digital AI.
         </p>
 
         <div className="flex items-center gap-2 text-muted-foreground">

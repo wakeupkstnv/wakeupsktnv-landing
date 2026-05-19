@@ -3,16 +3,16 @@ import Link from "next/link"
 
 const experiences = [
   {
-    period: "Aug 2025 — Present",
+    period: "Aug 2025 — Dec 2025",
     title: "Middle Backend/AI Engineer",
     company: "Bereke Bank",
-    url: "https://berekabank.kz",
+    url: "#",
     description: [
       "Integrated vLLM with LiteLLM to provide a scalable and cost-efficient LLM serving layer with API-key-based access control.",
-      "Implemented comprehensive Observability and Eval pipelines in LangFuse for LLM performance monitoring, trace analysis, and quality evaluation.",
+      "Implemented observability and eval pipelines in LangFuse for LLM performance monitoring, trace analysis, and quality evaluation.",
       "Optimized LLM inference throughput by configuring GPU utilization and batching strategies in vLLM.",
     ],
-    technologies: ["vLLM", "LiteLLM", "LangFuse", "Python", "FastAPI"],
+    technologies: ["Python", "vLLM", "LiteLLM", "LangFuse", "LLMs", "GPU"],
   },
   {
     period: "Feb 2025 — Aug 2025",
@@ -23,9 +23,11 @@ const experiences = [
       "Developed AI-based voice call services, enabling automated customer interaction.",
       "Built AI agent orchestration using Pydantic AI to dynamically manage behavior.",
       "Implemented clean architecture principles across multiple microservices to improve scalability and maintainability.",
+      "Introduced and integrated new technologies into production pipelines to boost performance and reliability.",
       "Led internal technical talks and knowledge-sharing sessions to upskill the engineering team.",
+      "Configured CI/CD pipelines, Docker, and deployed applications on Digital Ocean.",
     ],
-    technologies: ["Pydantic AI", "FastAPI", "Docker", "CI/CD", "Digital Ocean"],
+    technologies: ["Python", "Pydantic AI", "FastAPI", "Docker", "CI/CD", "Digital Ocean"],
   },
   {
     period: "Jun 2025 — Aug 2025",

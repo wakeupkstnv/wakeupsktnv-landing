@@ -17,18 +17,18 @@ interface AwardItem {
 const AWARDS: AwardItem[] = [
   {
     id: "nfactorial",
-    title: "TOP 50 FINALIST",
+    title: "NFACTORIAL INCUBATOR FINALIST",
     organization: "nFactorial Incubator 2024",
-    year: "2024",
-    description: "Selected from 6,500+ applicants across Central Asia. Intensive 8-week startup program focused on building real products.",
+    year: "JUN 2024 — AUG 2024",
+    description: "Awarded for exceptional performance and innovative contributions to AI-driven educational projects.",
     highlight: true,
   },
   {
     id: "yandex",
     title: "2ND PLACE",
-    organization: "Yandex Cup Kazakhstan Hackathon",
-    year: "2024",
-    description: "Developed AI-powered solution for real-world business challenges. Competed against top developers from the region.",
+    organization: "Yandex Archive Hackathon",
+    year: "OCT 2024",
+    description: "Won 2nd place for the project Archive-Hack at Yandex's open competition.",
     highlight: true,
   },
 ]
@@ -40,7 +40,7 @@ function AwardCard({ award, index }: { award: AwardItem; index: number }) {
       whileInView={{ opacity: 1, x: 0, filter: "blur(0px)" }}
       viewport={{ once: true, margin: "-40px" }}
       transition={{ delay: index * 0.15, duration: 0.6, ease }}
-      className={`flex flex-col border-2 border-foreground ${
+      className={`pixel-panel flex flex-col border-2 border-foreground ${
         award.highlight ? "bg-foreground text-background" : "bg-background"
       }`}
     >
@@ -49,7 +49,7 @@ function AwardCard({ award, index }: { award: AwardItem; index: number }) {
         award.highlight ? "border-background/20" : "border-foreground"
       }`}>
         <div className="flex items-center gap-2">
-          <Trophy size={14} className="text-[#ea580c]" />
+          <Trophy size={14} className="text-[#8fb8c7]" />
           <span className="text-[10px] tracking-[0.2em] uppercase font-mono">
             {award.year}
           </span>
@@ -67,7 +67,7 @@ function AwardCard({ award, index }: { award: AwardItem; index: number }) {
           {award.title}
         </h3>
         <p className={`text-xs tracking-[0.15em] uppercase font-mono mb-4 ${
-          award.highlight ? "text-[#ea580c]" : "text-[#ea580c]"
+          award.highlight ? "text-[#8fb8c7]" : "text-[#8fb8c7]"
         }`}>
           {award.organization}
         </p>
@@ -96,7 +96,7 @@ export function AwardsSection() {
           {"// SECTION: ACHIEVEMENTS"}
         </span>
         <div className="flex-1 border-t border-border" />
-        <Award size={12} className="text-[#ea580c]" />
+        <Award size={12} className="text-[#8fb8c7]" />
         <span className="text-[10px] tracking-[0.2em] uppercase text-muted-foreground font-mono">004</span>
       </motion.div>
 

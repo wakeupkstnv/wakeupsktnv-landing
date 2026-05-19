@@ -6,21 +6,36 @@ const ease = [0.22, 1, 0.36, 1] as const
 
 const TECHNOLOGIES = [
   "PYTHON",
+  "JAVA",
+  "SQL",
   "FASTAPI",
+  "DJANGO REST",
+  "SANIC",
+  "LITESTAR",
+  "PYDANTIC AI",
   "VLLM",
-  "LANGCHAIN",
+  "LITELLM",
+  "LANGFUSE",
   "DOCKER",
-  "KUBERNETES",
+  "RABBITMQ",
+  "CELERY",
+  "SQLALCHEMY",
+  "ALEMBIC",
+  "ASYNCIO",
+  "WEBSOCKETS",
   "POSTGRESQL",
+  "MONGODB",
   "REDIS",
-  "PYTORCH",
-  "TENSORFLOW",
+  "GRAFANA",
+  "PYTEST",
+  "NOMAD",
+  "ARGOCD",
 ]
 
 function TechBlock({ name, glitch }: { name: string; glitch: boolean }) {
   return (
     <div
-      className={`flex items-center justify-center px-8 py-4 border-r-2 border-foreground shrink-0 ${
+      className={`pixel-marquee-cell flex items-center justify-center px-8 py-4 border-r-2 border-foreground shrink-0 ${
         glitch ? "animate-glitch" : ""
       }`}
     >
@@ -57,7 +72,7 @@ export function TechMarquee() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-40px" }}
         transition={{ duration: 0.6, ease }}
-        className="overflow-hidden border-2 border-foreground"
+        className="pixel-panel overflow-hidden border-2 border-foreground bg-background/90"
       >
         <div className="flex animate-marquee" style={{ width: "max-content" }}>
           {[...TECHNOLOGIES, ...TECHNOLOGIES].map((name, i) => (
